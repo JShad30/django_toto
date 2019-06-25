@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>To Do List</title>
+    <link rel="stylesheet" href="../static/css/style.css" type="text/css" />
+</head>
+<body class="main-body">
+    <div class="container">
+    <h1 class="intro-text">Things that need to be done!</h1>
+    <table class="table">
+        {% for item in items %}
+        <tr class="item-in-table">
+            <div class="individual-item">
+                <div class="item-name">
+                    {% if item.done %}
+                    <td><strike>{{ item.name }}</strike></td>
+                    {% else %}
+                    <td>{{ item.name }}</td>
+                    {% endif %}
+                </div>
+                
+                <div class="buttons-in-table">
+                    <td class="button-section">
+                        <form class="button-container" method="POST" action="toggle/{{ item.id }}">{% csrf_token %}
+                            <input class="button toggle-button" type="submit" name="toggle" value="Toggle" />
+                        </form>
+                    </td>
+                    
+                    <td class="button-section">
+                        <form class="button-container" method="GET" action="edit/{{ item.id }}">
+                            <input class="button edit-button" type="Submit" name="edit" value="Edit"/>
+                        </form>
+                    </td>
+                </div>
+            </div>
+        </tr>
+        {% empty %}
+        <p>Nothing to see here!</ps>
+        {% endfor %}
+    </table>
+    
+    <a class="add-button" href="add">Add an Item</a>
+    
+    </div>
+</body>
+</html>
